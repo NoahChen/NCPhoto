@@ -1,0 +1,17 @@
+//
+//  PrefixHeader.pch
+//  NCPhotoDemo
+//
+//  Created by 企鹅iOS陈方舟 on 2018/12/11.
+//  Copyright © 2018 cn.rich. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "Header.h"
+
+#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+#endif /* PrefixHeader_pch */

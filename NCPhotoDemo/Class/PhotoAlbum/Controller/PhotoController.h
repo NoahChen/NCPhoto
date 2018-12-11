@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^Block)(NSArray *photoArr);
+
 @interface PhotoController : UIViewController
 
-@property (nonatomic, strong) UIImage *photo;
-@property (nonatomic, strong) NSArray *photoArr;
+@property (nonatomic, copy) Block photoBlock;
+
+- (void)returnPhotosBlock:(Block)block;
 
 @end

@@ -1,16 +1,16 @@
 //
-//  PhotoController.m
+//  PhotoPreviewController.m
 //  NCPhotoDemo
 //
-//  Created by 瑞琪 on 2016/11/30.
-//  Copyright © 2016年 cn.rich. All rights reserved.
+//  Created by 企鹅iOS陈方舟 on 2018/12/10.
+//  Copyright © 2018 cn.rich. All rights reserved.
 //
 
-#import "PhotoController.h"
+#import "PhotoPreviewController.h"
 
 static BOOL _isPush;
 
-@interface PhotoController () <UIGestureRecognizerDelegate, UIScrollViewDelegate>{
+@interface PhotoPreviewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate>{
     UIScrollView *_scrollView;
     UIImageView *_photoView;
     UIView *_selectView;
@@ -18,7 +18,7 @@ static BOOL _isPush;
 
 @end
 
-@implementation PhotoController
+@implementation PhotoPreviewController
 
 - (BOOL)prefersStatusBarHidden{
     return YES;
@@ -99,7 +99,7 @@ static BOOL _isPush;
 }
 
 #pragma mark - 按钮点击事件
-- (void)backBtnClick{
+- (void)backBtnClick {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -127,4 +127,3 @@ static BOOL _isPush;
 }
 
 @end
-

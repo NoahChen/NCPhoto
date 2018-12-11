@@ -220,7 +220,7 @@
     [self addTapGestureRecognizer:cell];
     //[self getPhotoManagerWith:indexPath.item imageView:cell.previewImageView];
     if (_imageArr.count == _assetsFetchResults.count) {
-        cell.previewImageView.image = _imageArr[indexPath.item];
+//        cell.previewImageView.image = _imageArr[indexPath.item];
     }
     cell.selectBtn.tag = indexPath.item;
     [cell.selectBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -243,8 +243,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     PhotoController *pc = [[PhotoController alloc] init];
-    pc.photo = _imageArr[indexPath.item];
-    pc.photoArr = _imageArr;
+//    pc.photo = _imageArr[indexPath.item];
+//    pc.photoArr = _imageArr;
     [self presentViewController:pc animated:YES completion:nil];
 }
 

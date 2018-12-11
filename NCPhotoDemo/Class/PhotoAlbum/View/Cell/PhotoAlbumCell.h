@@ -10,7 +10,7 @@
 
 @interface PhotoAlbumCell : UICollectionViewCell
 
-@property (nonatomic, strong) UIImageView *previewImageView;
+@property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UIButton *selectBtn;
 
 @end

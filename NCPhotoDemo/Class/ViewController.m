@@ -6,8 +6,9 @@
 //
 
 #import "ViewController.h"
+#import "PhotoController.h"
 #import "PhotoModel.h"
-#import "PhotoAlbumController.h"
+#import "PhotoManager.h"
 
 @interface ViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -21,46 +22,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    if ([PhotoModel hasImageData:[PhotoModel getSearchPath:0]] == YES) {
-        self.showPhotoView.image = [PhotoModel wirteImageData:0];
-    }
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (IBAction)openPhotoAlbum:(UIButton *)sender {
-    if ([PhotoModel openPhotoAlbumAvailable] == YES) {
-        PhotoAlbumController *pac = [[PhotoAlbumController alloc] init];
-        [pac returnPhotosBlock:^(NSArray *photoArr) {
-            //NSLog(@"照片数量---%lu",(unsigned long)photoArr.count);
-            self.photoCount = photoArr.count;
-            self.showPhotoView.image = photoArr[0];
-            [PhotoModel saveImages:photoArr compressionQuality:1.0];
-        }];
-        [self.navigationController pushViewController:pac animated:YES];
-    }
+    [PhotoManager photoAlbumAvailableResponse:^(BOOL isEnabled) {
+        if (isEnabled) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                PhotoController *pvc = [[PhotoController alloc] init];
+                [pvc returnPhotosBlock:^(NSArray *photoArr) {
+                    NSLog(@"照片---%@",photoArr);
+                }];
+                [self.navigationController pushViewController:pvc animated:YES];
+            });
+        } else {
+            NSLog(@"不允许使用相册");
+        }
+    }];
 }
 
-- (IBAction)takePhoto:(UIButton *)sender {
-    if ([PhotoModel takePhotoAvailable] == YES) {
-        self.cameraContoller = [[UIImagePickerController alloc] init];
-        self.cameraContoller.delegate = self;
-        self.cameraContoller.sourceType = UIImagePickerControllerSourceTypeCamera;
-        self.cameraContoller.editing = YES;
-        self.cameraContoller.showsCameraControls = YES;
-        [self presentViewController:self.cameraContoller animated:YES completion:nil];
-    }
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (self.photoCount == 0) return;
-    self.index++;
-    if (self.index == self.photoCount) {
-        self.index = 0;
-    }
-    self.showPhotoView.image = [PhotoModel wirteImageData:self.index];
-    if (self.photoCount != 1) {
-        [UIView transitionWithView:self.showPhotoView duration:1.0 options: UIViewAnimationOptionTransitionCurlUp animations:nil completion:nil];
-    }
+- (IBAction)openCamera:(UIButton *)sender {
+    
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -81,7 +63,6 @@
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
     if (!error) {
         self.showPhotoView.image = image;
-        [PhotoModel saveImage:image compressionQuality:1.0];
     }else{
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"照片保存失败" message:@"请您检查相关设置" preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
