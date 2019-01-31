@@ -17,8 +17,6 @@
 #import "AlbumCoverModel.h"
 #import "PhotoModel.h"
 
-//#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
-//#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 #define ITEMSIZE CGSizeMake(SCREEN_WIDTH/4, SCREEN_WIDTH/4)
 
 @interface PhotoController () <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate> {
